@@ -30,20 +30,16 @@ public class ImageCode {
     private Random random = new Random();
     
     /**
+     * 默认构造函数，生成ImageCode默认实例
      * @author xpzsoft
-     * @Description 默认构造函数，生成ImageCode默认实例
-     * @param 
-     * @return ImageCode对象
-     * @throws
      */
     public ImageCode(){}
     
     /**
+     * 默认构造函数，生成ImageCode实例
      * @author xpzsoft
-     * @Description 默认构造函数，生成ImageCode实例
-     * @param {width:[图片的宽度], height:[图片的高度]}
-     * @return ImageCode对象
-     * @throws
+     * @param width 图片的宽度
+     * @param height 图片的高度
      */
     public ImageCode(int width, int height) {
         this.width = width;
@@ -51,11 +47,11 @@ public class ImageCode {
     }
     
     /**
+     * 构造函数，生成ImageCode实例
      * @author xpzsoft
-     * @Description 默认构造函数，生成ImageCode实例
-     * @param {width:[图片的宽度], height:[图片的高度], codeCount:[验证码个数]}
-     * @return ImageCode对象
-     * @throws
+     * @param width 图片的宽度 
+     * @param height 图片的高度
+     * @param codeCount 验证码个数
      */
     public ImageCode(int width, int height, int codeCount) {
         this.width = width;
@@ -64,11 +60,12 @@ public class ImageCode {
     }
     
     /**
+     * 构造函数，生成ImageCode实例
      * @author xpzsoft
-     * @Description 默认构造函数，生成ImageCode实例
-     * @param {width:[图片的宽度], height:[图片的高度], codeCount:[验证码个数], lineCount:[混淆线条数]}
-     * @return ImageCode对象
-     * @throws
+     * @param width 图片的宽度 
+     * @param height 图片的高度
+     * @param codeCount 验证码个数
+     * @param lineCount 混淆线条数
      */
     public ImageCode(int width, int height, int codeCount, int lineCount) {
         this.width = width;
@@ -78,22 +75,18 @@ public class ImageCode {
     }
     
     /**
+     * 获取ImageCodeItem实例
      * @author xpzsoft
-     * @Description 获取ImageCodeItem实例
-     * @param 
-     * @return ImageCodeItem示例
-     * @throws
+     * @return ImageCodeItem
      */
     public ImageCodeItem getBuffImg() {
         return creatImage();
     }
 
     /**
+     * 创建ImageCodeItem实例
      * @author xpzsoft
-     * @Description 创建ImageCodeItem实例
-     * @param 
-     * @return ImageCodeItem示例
-     * @throws
+     * @return ImageCodeItem
      */
     private ImageCodeItem creatImage() {
         int fontWidth = width / codeCount;// 字体的宽度
@@ -160,11 +153,10 @@ public class ImageCode {
     }
 
     /**
+     * 生成随机字符串
      * @author xpzsoft
-     * @Description 生成随机字符串
-     * @param {n:[字符串长度]}
-     * @return 返回字符串
-     * @throws
+     * @param n 字符串长度
+     * @return String
      */
     private String randomStr(int n) {
         String str1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
@@ -179,11 +171,11 @@ public class ImageCode {
     }
 
     /**
+     * 随机生成颜色
      * @author xpzsoft
-     * @Description 随机生成颜色
-     * @param  {fc:[最小值], bc:[最大值]}
-     * @return 生成的Color对象
-     * @throws
+     * @param fc 最小值
+     * @param bc 最大值
+     * @return Color
      */
     private Color getRandColor(int fc, int bc) {// 给定范围获得随机颜色
         if (fc > 255)
@@ -197,11 +189,10 @@ public class ImageCode {
     }
     
     /**
+     * 随机生成生成字体
      * @author xpzsoft
-     * @Description 随机生成生成字体
-     * @param  {size:[字体大小]}
-     * @return 生成的Font对象
-     * @throws
+     * @param  size 字体大小
+     * @return Font
      */
     @SuppressWarnings("unused")
 	private Font getFont(int size) {

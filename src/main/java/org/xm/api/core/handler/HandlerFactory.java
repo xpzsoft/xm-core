@@ -10,20 +10,34 @@ import org.xm.api.springcontext.SpringContext;
 public class HandlerFactory {
 	
 	/**
+	 * 根据类型获取Handler处理器
      * @author xpzsoft
-     * @Description 根据类型获取Handler处理器
-     * @param {type:[Handler类型]}
-     * @return 返回指定Handler处理器
-     * @throws
+     * @param type Handler类型
+     * @param <T> 模板
+     * @return T 返回指定Handler处理器
      */
 	public static <T> T getHandler(Class<T> type){
 		return SpringContext.getContext().getBean(type);
 	}
-
+	
+	/**
+	 * 根据类型获取Handler处理器
+     * @author xpzsoft
+     * @param name Handler在Spring中配置的名称
+     * @return T 返回指定Handler处理器
+     */
 	public static Object getHandler(String name){
 		return SpringContext.getContext().getBean(name);
 	}
-
+	
+	/**
+	 * 根据类型获取Handler处理器
+     * @author xpzsoft
+     * @param name Handler在Spring中配置的名称
+     * @param type Handler类型
+     * @param <T> 模板
+     * @return T 返回指定Handler处理器
+     */
 	public static <T> T getHandler(String name, Class<T> type){
 		return SpringContext.getContext().getBean(name, type);
 	}

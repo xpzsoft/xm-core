@@ -5,7 +5,6 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
 /**
  * 
  * @author xpzsoft
- * @Description Web App Server类
  * @version 1.2.0
  */
 public class SpringContext {

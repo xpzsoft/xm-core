@@ -24,11 +24,10 @@ public class VerificationFeature implements DynamicFeature{
 	private static HashMap<String, Boolean> req_file = new HashMap<String, Boolean>();
 	
 	/**
+	 * 读取注解并完成配置初始化
      * @author xpzsoft
-     * @Description 读取注解，完成配置初始化
-     * @param {resourceInfo:[资源信息], context:[上下文信息]}
-     * @return
-     * @throws
+     * @param resourceInfo 资源信息
+     * @param context 上下文信息
      */
 	public void configure(ResourceInfo resourceInfo, FeatureContext context) {
          
@@ -57,11 +56,11 @@ public class VerificationFeature implements DynamicFeature{
     }
 	
 	/**
+	 * 验证api权限
      * @author xpzsoft
-     * @Description 验证api权限
-     * @param {path:[api路径], authcode:[权限值]}
-     * @return 是否满足权限要求
-     * @throws
+     * @param path api路径
+     * @param authcode 权限值
+     * @return boolean
      */
 	public static boolean doVerificationPermissions(String path, int authcode){
 		if(auth.get(path) !=null && Integer.valueOf(auth.get(path).toString()) <= authcode){
@@ -71,11 +70,10 @@ public class VerificationFeature implements DynamicFeature{
 	}
 	
 	/**
+	 * 验证请求参数是否为json格式
      * @author xpzsoft
-     * @Description 验证请求参数是否为json格式
-     * @param {path:[api路径]}
-     * @return 是否json格式
-     * @throws
+     * @param path api路径
+     * @return boolean
      */
 	public static boolean doVerificationNoApplicationJson(String path){
 		return req_file.get(path);

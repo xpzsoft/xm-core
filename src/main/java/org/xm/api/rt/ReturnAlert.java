@@ -35,11 +35,8 @@ public class ReturnAlert {
 	private final String []paths = {"/alert/alert-default.html", "/alert/alert-success.html", "/alert/alert-info.html", "/alert/alert-warning.html", "/alert/alert-error.html"};
 	
 	/**
+	 * 读取弹出框脚本
      * @author xpzsoft
-     * @Description 读取弹出框脚本
-     * @param 
-     * @return 
-     * @throws
      */
 	public void readHtmls(){
 		for(int i = 0; i < paths.length; i++){
@@ -72,11 +69,11 @@ public class ReturnAlert {
 	}
 	
 	/**
+	 * 获取弹出框脚本
      * @author xpzsoft
-     * @Description 获取弹出框脚本
-     * @param {alert_type:[弹出框类型], msg:[弹出框显示的信息]}
-     * @return 弹出框脚本
-     * @throws
+     * @param alert_type 弹出框类型
+     * @param msg 弹出框显示的信息
+     * @return String
      */
 	public String getAlert(int alert_type, String msg){
 		if(alert_type < 0 || alert_type > 4)

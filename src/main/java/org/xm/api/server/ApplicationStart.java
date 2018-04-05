@@ -18,9 +18,8 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.xm.api.springcontext.SpringContext;
 
 /**
- * 
+ * WebApp启动类
  * @author xpzsoft
- * @Description Web App启动类
  * @version 1.2.0
  */
 public class ApplicationStart implements ApplicationContextAware{
@@ -35,19 +34,18 @@ public class ApplicationStart implements ApplicationContextAware{
     private boolean isOK = true; 
     
     /**
+     * ApplicationStart构造器
      * @author xpzsoft
-     * @Description ApplicationStart构造器
-     * @param {serverConfig:[服务器配置项]}
-     * @return ApplicationStart实例
+     * @param serverConfig 服务器配置项]}
      */
     public ApplicationStart(ServerConfig serverConfig) {
 		this.serverConfig = serverConfig;
 	}
     
     /**
+     * 设置spring conetxt，spring与jetty共用context
      * @author xpzsoft
-     * @Description 设置spring conetxt，spring与jetty共用context
-     * @param {applicationContext:[Web App上下文]}
+     * @param applicationContext WebApp上下文
      */
     public void setApplicationContext(ApplicationContext applicationContext)  
             throws BeansException {
@@ -60,9 +58,8 @@ public class ApplicationStart implements ApplicationContextAware{
     }
     
     /**
+     * 启动WebApp
      * @author xpzsoft
-     * @Description 启动Web App
-     * 
      */
 	public void start(){
 		

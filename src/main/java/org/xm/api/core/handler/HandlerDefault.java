@@ -22,7 +22,6 @@ import org.xm.api.springcontext.SpringContext;
 /**
  * 
  * @author xpzsoft
- * @inheritDoc Handler
  * @version 1.2.0
  */
 public abstract class HandlerDefault implements Handler{
@@ -32,11 +31,8 @@ public abstract class HandlerDefault implements Handler{
 	private AsyAfterHandlePool pool = null;
 	
 	/**
+	 * 默认无参处理器构造器
      * @author xpzsoft
-     * @Description 默认无参处理器构造器
-     * @param 
-     * @return 返回处理器实体
-     * @throws
      */
 	public HandlerDefault(){
 		checks.put("Handle", new HandlerCheckItem());
@@ -44,11 +40,9 @@ public abstract class HandlerDefault implements Handler{
 	}
 	
 	/**
+	 * 带参处理器构造器
      * @author xpzsoft
-     * @Description 带参处理器构造器
-     * @param {handler_names:[自定义处理器名称数组]} 
-     * @return 返回处理器实体
-     * @throws 
+     * @param handler_names 自定义处理器名称数组
      */
 	public HandlerDefault(String [] handler_names){
 		checks.put("Handle", new HandlerCheckItem());
@@ -65,7 +59,7 @@ public abstract class HandlerDefault implements Handler{
 	}
 	
 	/**
-	 * {@link Handler#handle(T arg)} can be checked for the result.
+	 * {@link Handler#handle(Object arg)} can be checked for the result.
 	 */
 	@Override
 	public <T> ReturnItem handle(T arg) {
@@ -99,7 +93,7 @@ public abstract class HandlerDefault implements Handler{
 	
 	/**
 	 * {@link Handler#handle(Object arg, String handler_name)} can be checked for the result.
-	 * @exception 如果hader_names为空，或者handler_name没有注册，则抛出运行时异常
+	 * @exception RuntimeException 如果hader_names为空，或者handler_name没有注册，则抛出运行时异常
 	 */
 	@Override
 	public ReturnItem handle(Object arg, String handler_name) {
@@ -159,7 +153,7 @@ public abstract class HandlerDefault implements Handler{
 	}
 	
 	/**
-	 * {@link Handler#handle2(HttpServletRequest requet, T arg)} can be checked for the result.
+	 * {@link Handler#handle2(HttpServletRequest requet, Object arg)} can be checked for the result.
 	 */
 	public <T> ReturnItem handle2(HttpServletRequest requet, T arg){
 		// TODO Auto-generated method stub
@@ -193,7 +187,7 @@ public abstract class HandlerDefault implements Handler{
 	
 	/**
 	 * {@link Handler#handle2(HttpServletRequest requet, Object arg, String handler_name)} can be checked for the result.
-	 * @exception 如果hader_names为空，或者handler_name没有注册，则抛出运行时异常
+	 * @exception RuntimeException 如果hader_names为空，或者handler_name没有注册，则抛出运行时异常
 	 */
 	public ReturnItem handle2(HttpServletRequest requet, Object arg, String handler_name){
 		if(handler_names == null || !handler_names.contains(handler_name)){
@@ -286,38 +280,35 @@ public abstract class HandlerDefault implements Handler{
 	}
 	
 	/**
+	 * 处理器前置处理
      * @author xpzsoft
-     * @Description 处理器前置处理
-     * @param {arg:[参数], ri:[处理结果]}
-     * @return 
-     * @throws
+     * @param arg 参数
+     * @param <T> 模板
+     * @param ri 处理结果和参数的集合对象
      */
 	protected abstract <T> void beforeHandle(T arg, ReturnItem ri);
 	
 	/**
+	 * 处理器业务处理
      * @author xpzsoft
-     * @Description 处理器业务处理
-     * @param {ri:[处理结果]}
-     * @return 
-     * @throws
+     * @param ri 处理结果和参数的集合对象
      */
 	protected abstract void inHandle(ReturnItem ri);
 	
 	/**
-     * @author xpzsoft
-     * @Description 处理器后置处理
-     * @param {ri:[处理结果]}
-     * @return 
-     * @throws
+	 * 处理器后置处理
+     * @author xpzsoft 
+     * @param ri 处理结果和参数的集合对象
      */
 	protected abstract void afterHandle(ReturnItem ri);
 	
 	/**
+	 * 检查处理器是否包含了before和After两个步骤
      * @author xpzsoft
-     * @Description 检查处理器是否包含了before和After两个步骤
-     * @param {beforename:[处理器前置处理名称], inname:[处理器业务处理名称], aftername:[处理器后置处理名称], check:[处理器监察对象]}
-     * @return 
-     * @throws
+     * @param beforename 处理器前置处理名称
+     * @param inname 处理器业务处理名称
+     * @param aftername 处理器后置处理名称
+     * @param check 处理器监察对象
      */
 	private void checkFunofBeforAndAfter(String beforename, String inname, String aftername, HandlerCheckItem check){
 		Method [] m = this.getClass().getDeclaredMethods();
@@ -348,11 +339,10 @@ public abstract class HandlerDefault implements Handler{
 	}
 	
 	/**
+	 * 检查处理器的后置处理注解
      * @author xpzsoft
-     * @Description 检查处理器的后置处理注解
-     * @param {afterhandle:[处理器后置处理名称], check:[处理器监察对象]}
-     * @return 
-     * @throws
+     * @param afterhandle 处理器后置处理名称
+     * @param check 处理器监察对象
      */
 	private void checkAnno(String afterhandle, HandlerCheckItem check){
 		try {
@@ -380,11 +370,10 @@ public abstract class HandlerDefault implements Handler{
 	}
 	
 	/**
+	 * 检查是否包含该方法
      * @author xpzsoft
-     * @Description 检查是否包含该方法
-     * @param {methodname:[要检查的方法的名称]}
-     * @return 是否包含该方法
-     * @throws
+     * @param methodname 要检查的方法的名称
+     * @return boolean
      */
 	private boolean checkMethodName(String methodname){
 		if(methodname == null || methodname.length() == 0 || methodname.equals("Handle"))
@@ -399,11 +388,12 @@ public abstract class HandlerDefault implements Handler{
 	}
 	
 	/**
+	 * 调用方法
      * @author xpzsoft
-     * @Description 调用方法
-     * @param {methodname:[要检查的方法的名称], classes:[类型数组], objects:[参数列表]}
-     * @return 是否包含该方法
-     * @throws
+     * @param methodname 要检查的方法的名称
+     * @param classes 类型数组
+     * @param objects 参数列表
+     * @return booelan
      */
 	private boolean invorkMethod(String methodname, Class<?>[] classes,  Object... objects){
 		try {

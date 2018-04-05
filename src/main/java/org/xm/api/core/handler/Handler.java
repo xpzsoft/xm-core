@@ -11,74 +11,70 @@ import org.xm.api.rt.ReturnItem;
  */
 public interface Handler {
 	/**
+	 * 默认处理器处理不带参数的请求
      * @author xpzsoft
-     * @Description 默认处理器处理不带参数的请求
-     * @param 
-     * @return 返回处理结果
-     * @throws
+     * @return ReturnItem
      */
 	public ReturnItem handle();
 	
 	/**
+	 * 默认处理器处理带参数的请求
      * @author xpzsoft
-     * @Description 默认处理器处理带参数的请求
-     * @param {arg:[参数]}
-     * @return 返回处理结果
-     * @throws
+     * @param arg 参数
+     * @param <T> 模板
+     * @return ReturnItem
      */
 	public <T> ReturnItem handle(T arg);
 	
 	/**
+	 * 自定义处理器处理带参数的请求
      * @author xpzsoft
-     * @Description 自定义处理器处理带参数的请求
-     * @param {arg:[参数], handler_name:[自定义处理器名称]}
-     * @return 返回处理结果
-     * @throws
+     * @param arg 参数
+     * @param handler_name 自定义处理器名称
+     * @return ReturnItem
      */
 	public ReturnItem handle(Object arg, String handler_name);
 	
 	/**
+	 * 默认处理器处理带参数的请求
      * @author xpzsoft
-     * @Description 默认处理器处理带参数的请求
-     * @param {requet:[客户端请求对象]}
-     * @return 返回处理结果
-     * @throws
+     * @param requet 客户端请求对象
+     * @return ReturnItem
      */
 	public ReturnItem handle2(HttpServletRequest requet);
 	
 	/**
+	 * 默认处理器处理带参数的请求
      * @author xpzsoft
-     * @Description 默认处理器处理带参数的请求
-     * @param {requet:[客户端请求对象], arg:[参数]}
-     * @return 返回处理结果
-     * @throws
+     * @param requet 客户端请求对象
+     * @param arg 参数
+     * @param <T> 模板
+     * @return ReturnItem
      */
 	public <T> ReturnItem handle2(HttpServletRequest requet, T arg);
 	
 	/**
+	 * 默认处理器处理带参数的请求
      * @author xpzsoft
-     * @Description 自定义处理器处理带参数的请求
-     * @param {requet:[客户端请求对象], arg:[参数], handler_name:[自定义处理器名称]}
-     * @return 返回处理结果
-     * @throws
+     * @param requet 客户端请求对象
+     * @param arg 参数
+     * @param handler_name 自定义处理器名称
+     * @return ReturnItem
      */
 	public ReturnItem handle2(HttpServletRequest requet, Object arg, String handler_name);
 	
 	/**
-     * @author xpzsoft
-     * @Description 注册自定义处理器
-     * @param {names:[处理器名称数组]}
-     * @return 
-     * @throws
+	 * 注册自定义处理器
+     * @author xpzsoft 
+     * @param names 处理器名称数组
      */
 	public void registerHandler(String [] names);
 	
 	/**
+	 * 调用异步处理
      * @author xpzsoft
-     * @Description 调用异步处理
-     * @param {methodname:[方法名称], arg:[参数]}
-     * @return
-     * @throws
+     * @param methodname 方法名称
+     * @param arg 参数
      */
 	public void handleAfterAsy(String methodname, ReturnItem arg);
 }

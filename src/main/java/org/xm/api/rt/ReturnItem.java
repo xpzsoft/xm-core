@@ -39,20 +39,16 @@ public class ReturnItem {
 	private Boolean ignore = false;
 	
 	/**
+	 * 处理结果返回对象构造器
      * @author xpzsoft
-     * @Description 处理结果返回对象构造器
-     * @param 
-     * @return 处理结果返回对象实例
-     * @throws
      */
 	public ReturnItem(){}
 	
 	/**
+	 * 处理结果返回对象带参构造器
      * @author xpzsoft
-     * @Description 处理结果返回对象带参构造器
-     * @param {tokenid:[本次请求的tokenId], userid:[本次请求的userId]}
-     * @return 处理结果返回对象实例
-     * @throws
+     * @param tokenid 本次请求的tokenId
+     * @param userid 本次请求的userId
      */
 	public ReturnItem(String tokenid, String userid){
 		this.tokeId = tokenid;
@@ -80,22 +76,20 @@ public class ReturnItem {
 	}
 	
 	/**
+	 * 设置弹出框
      * @author xpzsoft
-     * @Description 设置弹出框
-     * @param {alert_type:[弹出框类型], msg:[弹出框显示的文本]}
-     * @return 
-     * @throws
+     * @param alert_type 弹出框类型
+     * @param msg 弹出框显示的文本
      */
 	public void setAlert(int alert_type, String msg) {
 		this.alert = SpringContext.getContext().getBean("getReturnAlert", ReturnAlert.class).getAlert(alert_type, msg);
 	}
 	
 	/**
+	 * 设置处理结果和返回对象
      * @author xpzsoft
-     * @Description 设置处理结果和返回对象
-     * @param {code:[处理结果标识码], value:[返回对象]}
-     * @return
-     * @throws
+     * @param code 处理结果标识码
+     * @param value 返回对象
      */
 	public void setInfo(int code, Object value){
 		this.code = code;
@@ -103,11 +97,12 @@ public class ReturnItem {
 	}
 	
 	/**
+	 * 设置处理结果、返回对象和弹出框
      * @author xpzsoft
-     * @Description 设置处理结果、返回对象和弹出框
-     * @param {code:[处理结果标识码], value:[返回对象], alert_type:[弹出框类型], msg:[弹出框显示的文本]}
-     * @return 
-     * @throws
+     * @param code 处理结果标识码
+     * @param value 返回对象
+     * @param alert_type 弹出框类型
+     * @param msg 弹出框显示的文本
      */
 	public void setInfo(int code, Object value, int alert_type, String msg){
 		this.code = code;
@@ -124,11 +119,10 @@ public class ReturnItem {
 	}
 	
 	/**
-     * @author xpzsoft
-     * @Description 获取参数
-     * @param {index:[参数索引]}
-     * @return 参数实例
-     * @throws
+	 * 获取参数
+     * @author xpzsoft 
+     * @param index 参数索引
+     * @return ReturnItem
      */
 	public ReturnItem get(int index){
 		nitem = this.params.get(index);
@@ -136,11 +130,10 @@ public class ReturnItem {
 	}
 	
 	/**
+	 * 添加参数
      * @author xpzsoft
-     * @Description 添加参数
-     * @param {obj:[参数实例]}
-     * @return 
-     * @throws
+     * @param obj 参数实例
+     * @return ReturnItem
      */
 	public ReturnItem addParam(Object obj){
 		this.getParams().add(obj);
@@ -155,88 +148,99 @@ public class ReturnItem {
 	}
 	
 	/**
+	 * 将获取的参数转换为Byte类型
      * @author xpzsoft
-     * @Description 将获取的参数转换为Byte类型
+     * @return Byte
      */
 	public Byte toByte(){
 		return (Byte)nitem;
 	}
 	
 	/**
+	 * 将获取的参数转换为Short类型
      * @author xpzsoft
-     * @Description 将获取的参数转换为Short类型
+     * @return Short
      */
 	public Short toShort(){
 		return (Short)nitem;
 	}
 	
 	/**
+	 * 将获取的参数转换为Integer类型
      * @author xpzsoft
-     * @Description 将获取的参数转换为Integer类型
+     * @return Integer
      */
 	public Integer toInteger(){
 		return (Integer)nitem;
 	}
 	
 	/**
+	 * 将获取的参数转换为Float类型
      * @author xpzsoft
-     * @Description 将获取的参数转换为Float类型
+     * @return Float
      */
 	public Float toFloat(){
 		return (Float)nitem;
 	}
 	
 	/**
+	 * 将获取的参数转换为Double类型
      * @author xpzsoft
-     * @Description 将获取的参数转换为Double类型
+     * @return Double
      */
 	public Double toDouble(){
 		return (Double)nitem;
 	}
 	
 	/**
+	 * 将获取的参数转换为Long类型
      * @author xpzsoft
-     * @Description 将获取的参数转换为Long类型
+     * @return Long
      */
 	public Long toLong(){
 		return (Long)nitem;
 	}
 	
 	/**
+	 * 将获取的参数转换为BigInteger类型
      * @author xpzsoft
-     * @Description 将获取的参数转换为BigInteger类型
+     * @return BigInteger
      */
 	public BigInteger toBigInteger(){
 		return new BigInteger(nitem.toString());
 	}
 	
 	/**
+	 * 将获取的参数转换为BigDecimal类型
      * @author xpzsoft
-     * @Description 将获取的参数转换为BigDecimal类型
+     * @return BigDecimal
      */
 	public BigDecimal toBigDecimal(){
 		return new BigDecimal(nitem.toString());
 	}
 	
 	/**
+	 * 将获取的参数转换为String类型
      * @author xpzsoft
-     * @Description 将获取的参数转换为String类型
+     * @return String
      */
 	public String toString(){
 		return (String)nitem;
 	}
 	
 	/**
+	 * 将获取的参数转换为Boolean类型
      * @author xpzsoft
-     * @Description 将获取的参数转换为Boolean类型
+     * @return Boolean
      */
 	public Boolean toBoolean(){
 		return (Boolean)nitem;
 	}
 	
 	/**
+	 * 将获取的参数转换为Object类型
      * @author xpzsoft
-     * @Description 将获取的参数转换为Object类型
+     * @return Object
      */
 	public Object toObject(){
 		return nitem;

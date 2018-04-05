@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
 /**
  * 
  * @author xpzsoft
- * @Description Web App Server类
  * @version 1.2.0
  */
 public class ServerConfig{
@@ -58,11 +57,10 @@ public class ServerConfig{
 	private boolean https_enable = true;
 	
 	/**
+	 * 加载配置文件
      * @author xpzsoft
-     * @Description 加载配置文件
-     * @param 
-     * @return 是否加载成功
-     * @throws 读取文件失败异常
+     * @return boolean
+     * @throws Exception 读取文件失败异常
      */
 	public boolean loadConfig() throws Exception{
 		File file = new File(path);
@@ -83,11 +81,10 @@ public class ServerConfig{
 	}
 	
 	/**
+	 * 解析配置文件
      * @author xpzsoft
-     * @Description 解析配置文件
-     * @param {root:[XML文档根节点]}
-     * @return 
-     * @throws
+     * @Description 
+     * @param root XML文档根节点
      */
 	@SuppressWarnings("unchecked")
 	private void parseData(Element root) throws Exception{

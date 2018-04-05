@@ -20,11 +20,8 @@ public class AsyAfterHandlePool {
 	private int count = 0;
 	
 	/**
+	 * 异步线程池构造器
      * @author xpzsoft
-     * @Description 异步线程池构造器
-     * @param 
-     * @return 异步线程池实例
-     * @throws
      */
 	public AsyAfterHandlePool(){
 		//默认添加并开启一个常驻后置处理线程
@@ -33,11 +30,12 @@ public class AsyAfterHandlePool {
 	}
 	
 	/**
+	 * 添加异步后置任务
      * @author xpzsoft
-     * @Description 添加异步后置任务
-     * @param {handler:[处理器], method:[后置处理函数名称], arg:[参数]}
-     * @return 任务添加是否成功
-     * @throws
+     * @param handler 处理器
+     * @param method 后置处理函数名称
+     * @param arg 参数
+     * @return booelan
      */
 	public synchronized boolean addTask(Handler handler, String method, ReturnItem arg){
 		for(int i = 0; i < pool.size(); i++){
@@ -56,22 +54,18 @@ public class AsyAfterHandlePool {
 	}
 	
 	/**
+	 * 获取任务列类长度
      * @author xpzsoft
-     * @Description 获取任务列类长度
-     * @param 
-     * @return 任务列类长度
-     * @throws
+     * @return int
      */
 	public int getSize() {
 		return size;
 	}
 	
 	/**
+	 * 设置任务队列长度
      * @author xpzsoft
-     * @Description 设置任务队列长度
-     * @param {size:[队列长度]}
-     * @return
-     * @throws
+     * @param size 队列长度
      */
 	public void setSize(int size) {
 		if(size < 1)

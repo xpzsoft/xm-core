@@ -49,11 +49,12 @@ public class AuthToken {
     }
     
     /**
+     * 为用户创建一个token签名对象
      * @author xpzsoft
-     * @Description 为用户创建一个token签名对象
-     * @param {auth_type:[用户登录类型，为AUTHN_SINGLE或者AUTHN_MULTIPLY], user_id:[用户唯一标识]}
-     * @return 返回一个签名后的token对象
-     * @throws 如果auth_type为AUTHN_SINGLE， 则user_id不能为空，否则抛出异常
+     * @param auth_type 用户登录类型，为AUTHN_SINGLE或者AUTHN_MULTIPLY
+     * @param user_id 用户唯一标识
+     * @return AuthTokenItem
+     * @throws RuntimeException 如果auth_type为AUTHN_SINGLE， 则user_id不能为空，否则抛出异常
      */
     public static AuthTokenItem sign(int auth_type, String user_id){
     	if(auth_type == AUTHN_SINGLE && user_id == null)
@@ -75,11 +76,13 @@ public class AuthToken {
     }
     
     /**
+     * 为用户创建一个token签名对象
      * @author xpzsoft
-     * @Description 为用户创建一个token签名对象
-     * @param {auth_type:[用户登录类型，为AUTHN_SINGLE或者AUTHN_MULTIPLY], user_id:[用户唯一标识], code:[权限]}
-     * @return 返回一个签名后的token对象
-     * @throws 如果auth_type为AUTHN_SINGLE， 则user_id不能为空，否则抛出异常；如果code为空，抛出null异常
+     * @param auth_type 用户登录类型，为AUTHN_SINGLE或者AUTHN_MULTIPLY
+     * @param user_id 用户唯一标识
+     * @param code 权限
+     * @return AuthTokenItem
+     * @throws RuntimeException 如果auth_type为AUTHN_SINGLE， 则user_id不能为空，否则抛出异常
      */
     public static AuthTokenItem sign(int auth_type, String user_id, AuthAnnotation.AuthCode code){
     	if(code == null)
@@ -103,11 +106,14 @@ public class AuthToken {
     }
     
     /**
+     * 为用户创建一个token签名对象
      * @author xpzsoft
-     * @Description 为用户创建一个token签名对象
-     * @param {auth_type:[用户登录类型，为AUTHN_SINGLE或者AUTHN_MULTIPLY], user_id:[用户唯一标识], code:[权限], time:[token有效时长（单位毫秒）]}
-     * @return 返回一个签名后的token对象
-     * @throws 如果auth_type为AUTHN_SINGLE， 则user_id不能为空，否则抛出异常；如果code为空，抛出null异常；如果time值小于10000ms，抛出参数不合格异常
+     * @param auth_type 用户登录类型，为AUTHN_SINGLE或者AUTHN_MULTIPLY
+     * @param user_id 用户唯一标识
+     * @param code 权限
+     * @param time token有效时长（单位毫秒）
+     * @return AuthTokenItem
+     * @throws RuntimeException 如果auth_type为AUTHN_SINGLE， 则user_id不能为空，否则抛出异常
      */
     public static AuthTokenItem sign(int auth_type, String user_id, AuthAnnotation.AuthCode code, Long time){
     	if(code == null)
@@ -133,11 +139,11 @@ public class AuthToken {
     }
 
     /**
+     * 创建token签名字符串
      * @author xpzsoft
-     * @Description 创建token签名字符串
-     * @param {object:[token中携带的用户信息，存放于PAYLOAD中], maxAge:[token有效时长（单位毫秒）]}
-     * @return 返回一个签名后的token字符串
-     * @throws
+     * @param object token中携带的用户信息，存放于PAYLOAD中
+     * @param maxAge token有效时长（单位毫秒）
+     * @return String
      */
     private static <T> String sign(T object, long maxAge) {
         try {
@@ -154,11 +160,12 @@ public class AuthToken {
     }
 
     /**
+     * 解密传入的token字符串，并反序列化PAYLOAD的用户对象
      * @author xpzsoft
-     * @Description 解密传入的token字符串，并反序列化PAYLOAD的用户对象
-     * @param {jwt:[token字符串], classT:[反序列化的类型]}
-     * @return 返回一个反序列化的类型的对象
-     * @throws
+     * @param jwt token字符串 
+     * @param classT 反序列化的类型
+     * @param <T> 模板
+     * @return T
      */
     public static<T> T unsign(String jwt, Class<T> classT) {
         try {
@@ -184,11 +191,10 @@ public class AuthToken {
     }
     
     /**
+     * 对字符串进行异或加密
      * @author xpzsoft
-     * @Description 对字符串进行异或加密
-     * @param {str:[需要加密的字符串]}
-     * @return 返回加密后的字符串
-     * @throws
+     * @param str 需要加密的字符串
+     * @return String
      */
     public static String encodeXOR(String str){
     	if(str == null || str.trim().length() < 1){
@@ -205,11 +211,10 @@ public class AuthToken {
     }
     
     /**
+     * 对字符串进行异或解密
      * @author xpzsoft
-     * @Description 对字符串进行异或解密
-     * @param {str:[需要解密的字符串]}
-     * @return 返回解密后的字符串
-     * @throws
+     * @param str 需要解密的字符串
+     * @return String
      */
     public static String decodeXOR(String str){
     	if(str == null || str.trim().length() < 1){
@@ -225,11 +230,10 @@ public class AuthToken {
     }
 	
     /**
+     * 检查AuthTokenUser对象是否合格
      * @author xpzsoft
-     * @Description 检查AuthTokenUser对象是否合格
-     * @param {user:[AuthTokenUser对象]}
-     * @return 返回检查结果
-     * @throws
+     * @param user AuthTokenUser对象
+     * @return boolean
      */
 	public static boolean checkUser(AuthTokenUser user){
 		if(!user.isSingleLogin())
@@ -240,11 +244,10 @@ public class AuthToken {
 	}
 	
 	/**
+	 * 根据权限值生成AuthCode对象
      * @author xpzsoft
-     * @Description 根据权限值生成AuthCode对象
-     * @param {num:[权限值]}
-     * @return 返回生成的AuthCode对象
-     * @throws
+     * @param num 权限值
+     * @return AuthCode
      */
 	public static AuthCode getAuthCode(int num){
 		if(num == AuthCode.AC2.getValue())
@@ -269,22 +272,18 @@ public class AuthToken {
 	}
 	
 	/**
+	 * 返回token名称
      * @author xpzsoft
-     * @Description 返回token名称
-     * @param
-     * @return
-     * @throws
+     * @return String
      */
 	public static String getTOKEN_NAME() {
 		return TOKEN_NAME;
 	}
 	
 	/**
+	 * 设置token的名称
      * @author xpzsoft
-     * @Description 设置token的名称
-     * @param {tOKEN_NAME:[token新名称]}
-     * @return
-     * @throws
+     * @param tOKEN_NAME token新名称
      */
 	public static void setTOKEN_NAME(String tOKEN_NAME) {
 		if(tOKEN_NAME == null || tOKEN_NAME.trim().length() < 1)

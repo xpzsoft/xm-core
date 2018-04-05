@@ -13,9 +13,8 @@ import org.xm.api.jersey.config.RestApplication;
 import org.xm.api.springcontext.SpringContext;
 
 /**
- * 
+ * WebApp Server类
  * @author xpzsoft
- * @Description Web App Server类
  * @version 1.2.0
  */
 public class Server {
@@ -27,11 +26,9 @@ public class Server {
 	private Map<Class<?>, String[]> handlers = new HashMap<Class<?>, String[]>();
 	
 	/**
+	 * Server构造器
      * @author xpzsoft
-     * @Description Server构造器
-     * @param {packages:[Jersey扫描包的数组]}
-     * @return Server实例
-     * @throws
+     * @param packages Jersey扫描包的数组
      */
 	public Server(String packages[]){
 		RestApplication.addRestServicePakages(new String []{"org.xm.api.jersey.filter"});
@@ -40,11 +37,10 @@ public class Server {
 	}
 	
 	/**
+	 * Server构造器
      * @author xpzsoft
-     * @Description Server构造器
-     * @param {packages:[Jersey扫描包的数组], types:[Jersey要注册的类型]}
-     * @return Server实例
-     * @throws
+     * @param packages Jersey扫描包的数组
+     * @param types Jersey要注册的类型
      */
 	public Server(String packages[], Class<?>[] types){
 		RestApplication.addRestServicePakages(new String []{"org.xm.api.jersey.filter"});
@@ -55,11 +51,11 @@ public class Server {
 	}
 	
 	/**
+	 * Server构造器
      * @author xpzsoft
-     * @Description Server构造器
-     * @param {packages:[Jersey扫描包的数组], types:[Jersey要注册的类型], path_spring:[Spring配置文件路径]}
-     * @return Server实例
-     * @throws
+     * @param packages Jersey扫描包的数组
+     * @param types Jersey要注册的类型
+     * @param path_spring Spring配置文件路径
      */
 	public Server(String packages[], Class<?>[] types, String path_spring){
 		this.path_spring = path_spring;
@@ -71,11 +67,11 @@ public class Server {
 	}
 	
 	/**
+	 * 处理器注册
      * @author xpzsoft
-     * @Description 处理器注册
-     * @param {hander:[处理器类], names:[处理器名称数组]}
-     * @return Server实例
-     * @throws
+     * @param hander 处理器类
+     * @param names 处理器名称数组
+     * @return Server
      */
 	public Server registHandler(Class<?> hander, String names[]){
 		handlers.put(hander, names);
@@ -83,8 +79,8 @@ public class Server {
 	}
 	
 	/**
+	 * 执行处理器注册
      * @author xpzsoft
-     * @Description 执行处理器注册
      */
 	@SuppressWarnings("rawtypes")
 	private void registHandler(){
@@ -98,8 +94,8 @@ public class Server {
 	}
 	
 	/**
+	 * 启动Server
      * @author xpzsoft
-     * @Description 启动Server
      */
 	@SuppressWarnings("resource")
 	public void run(){

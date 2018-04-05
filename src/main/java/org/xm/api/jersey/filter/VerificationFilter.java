@@ -35,11 +35,9 @@ public class VerificationFilter implements ContainerRequestFilter{
     HttpServletRequest webRequest;
 	
 	/**
+	 * 请求过滤
      * @author xpzsoft
-     * @Description 请求过滤
-     * @param {request:[客户端请求对象]}
-     * @return
-     * @throws
+     * @param request 客户端请求对象
      */
 	public void filter(ContainerRequestContext request) throws IOException {
 		// TODO Auto-generated method stub

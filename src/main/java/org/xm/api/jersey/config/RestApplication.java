@@ -19,11 +19,8 @@ public class RestApplication extends ResourceConfig{
 	private static List<Class<?>> class_types = new ArrayList<Class<?>>();
 	
 	/**
+	 * Jersey配置构造器
      * @author xpzsoft
-     * @Description Jersey配置构造器
-     * @param 
-     * @return Jersey配置实例
-     * @throws
      */
 	public RestApplication() {
         //给出要扫描的包, 扫描多个包使用分号隔开
@@ -40,22 +37,17 @@ public class RestApplication extends ResourceConfig{
     }
 	
 	/**
+	 * 添加扫描的包
      * @author xpzsoft
-     * @Description 添加扫描的包
-     * @param {args:保命数组}
-     * @return 
-     * @throws
+     * @param args 保命数组
      */
 	public static void addRestServicePakages(String args[]){
 		for(String str : args)service_package.add(str);
 	}
 	
 	/**
+	 * 添加要注册的类型
      * @author xpzsoft
-     * @Description 添加要注册的类型
-     * @param {types:类型数组}
-     * @return 
-     * @throws
      */
 	public static void addRegisterClass(Class<?>[] tyeps){
 		for(Class<?> type : tyeps)class_types.add(type);

@@ -17,11 +17,11 @@ public class AsyAfterHandleItem {
 	private ReturnItem arg = null;
 	
 	/**
+	 * 异步后置处理任务对象构造器
      * @author xpzsoft
-     * @Description 异步后置处理任务对象构造器
-     * @param {handler:[处理器], method:[处理器的后置方法名称], arg:[参数]}
-     * @return 任务对象实例
-     * @throws
+     * @param handler 处理器
+     * @param method 处理器的后置方法名称
+     * @param arg 参数
      */
 	public AsyAfterHandleItem(Handler handler, String method, ReturnItem arg){
 		this.handler = handler;

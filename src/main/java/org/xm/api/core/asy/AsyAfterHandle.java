@@ -26,11 +26,11 @@ public class AsyAfterHandle extends Thread{
 	private boolean isconst = false;
 	
 	/**
+	 * 异步后置处理线程构造器
      * @author xpzsoft
-     * @Description 异步后置处理线程构造器
-     * @param {id:[线程id], size:[任务最大容量], isconst:[是否长开]}
-     * @return 返回AsyAfterHandle实例
-     * @throws
+     * @param id 线程id
+     * @param size 任务最大容量
+     * @param isconst 是否长开
      */
 	public AsyAfterHandle(int id, int size, boolean isconst){
 		this.id = id;
@@ -41,11 +41,8 @@ public class AsyAfterHandle extends Thread{
 	}
 	
 	/**
+	 * 线程执行函数
      * @author xpzsoft
-     * @Description 线程执行函数
-     * @param 
-     * @return
-     * @throws
      */
 	public void run(){
 		log.info("xm: after handle thread [id=" + id + "] is started! {isconst=" + isconst + ", size=" + (task_list.length - 1) + "}");
@@ -92,11 +89,12 @@ public class AsyAfterHandle extends Thread{
 	}
 	
 	/**
+	 * 添加异步后置任务
      * @author xpzsoft
-     * @Description 添加异步后置任务
-     * @param {handler:[处理器], method:[后置执行方法], arg:[参数]}
-     * @return 执行结果是否成功
-     * @throws
+     * @param handler 处理器
+     * @param method 后置执行方法
+     * @param arg 处理器需要的参数
+     * @return boolean
      */
 	public synchronized boolean addAsyAfterHandleItem(Handler handler, String method, ReturnItem arg){
 		if(count >= task_list.length){
@@ -114,11 +112,9 @@ public class AsyAfterHandle extends Thread{
 	
 	
 	/**
+	 * 更新后置任务数量
      * @author xpzsoft
-     * @Description 更新后置任务数量
-     * @param {add:[加或减]}
-     * @return 
-     * @throws
+     * @param add 加或减
      */
 	private synchronized void updateCount(boolean add){
 		if(add)
