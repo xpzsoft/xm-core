@@ -15,38 +15,63 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;  
 import org.springframework.web.context.WebApplicationContext;  
 import org.springframework.web.context.support.XmlWebApplicationContext;
-import org.xm.api.springcontext.ConstSpringContext;
+import org.xm.api.springcontext.SpringContext;
 
+/**
+ * 
+ * @author xpzsoft
+ * @Description Web App启动类
+ * @version 1.2.0
+ */
 public class ApplicationStart implements ApplicationContextAware{
 	private static final Logger log = LoggerFactory.getLogger(ApplicationStart.class);
+	//web app的服务器对象
 	private Server server;
+	//web app的服务器配置
 	private ServerConfig serverConfig = null;
+	//web app的上下文
     private ApplicationContext applicationContext;
+    //web app是否成功启动
     private boolean isOK = true; 
     
-    //获取spring conetxt
+    /**
+     * @author xpzsoft
+     * @Description ApplicationStart构造器
+     * @param {serverConfig:[服务器配置项]}
+     * @return ApplicationStart实例
+     */
+    public ApplicationStart(ServerConfig serverConfig) {
+		this.serverConfig = serverConfig;
+	}
+    
+    /**
+     * @author xpzsoft
+     * @Description 设置spring conetxt，spring与jetty共用context
+     * @param {applicationContext:[Web App上下文]}
+     */
     public void setApplicationContext(ApplicationContext applicationContext)  
             throws BeansException {
         this.applicationContext = applicationContext;  
           
     }
     
-    public void setServerConfig(ServerConfig serverConfig) {
-		this.serverConfig = serverConfig;
-	}
-    
     public boolean getIsOK(){
     	return isOK;
     }
-
+    
+    /**
+     * @author xpzsoft
+     * @Description 启动Web App
+     * 
+     */
 	public void start(){
-//    	String path = App.class.getClassLoader().getResource("").getPath();
-//        path = path.substring(1, path.length()- 16);
-
+		
+		//关闭被占用的端口
 		OldServerKiller.init(serverConfig.getHttp_port(), serverConfig.getHttps_port());
 		
         server = new Server();
         
+        //配置http协议参数
         if(serverConfig.isHttps_enable()){
         	HttpConfiguration https_config = new HttpConfiguration();
             https_config.setSecureScheme("https");
@@ -67,7 +92,7 @@ public class ApplicationStart implements ApplicationContextAware{
             server.addConnector(httpsConnector);
         }
         
-        
+      //配置https协议参数
         if(serverConfig.isHttp_enable()){
         	ServerConnector connector = new ServerConnector(server);
             //SelectChannelConnector connector = new SelectChannelConnector(); 
@@ -77,7 +102,7 @@ public class ApplicationStart implements ApplicationContextAware{
             server.addConnector(connector);  
         }
         
-          
+        //配置Web App相关参数
         WebAppContext webAppContext = new WebAppContext();
         
         webAppContext.setContextPath(serverConfig.getServer_name());  
@@ -93,7 +118,7 @@ public class ApplicationStart implements ApplicationContextAware{
         webAppContext.setInitParameter("org.eclipse.jetty.servlet.Default.useFileMappedBuffer", "false");
         server.setHandler(webAppContext);
 
-        // 以下代码是关键  
+        //Jetty容器共享Spring上下文
         webAppContext.setClassLoader(applicationContext.getClassLoader());
           
         XmlWebApplicationContext xmlWebAppContext = new XmlWebApplicationContext();
@@ -101,7 +126,7 @@ public class ApplicationStart implements ApplicationContextAware{
         xmlWebAppContext.setConfigLocation("");  
         xmlWebAppContext.setServletContext(webAppContext.getServletContext());  
         xmlWebAppContext.refresh();  
-        ConstSpringContext.setSpringcontext(xmlWebAppContext);
+        SpringContext.setSpringcontext(xmlWebAppContext);
           
         webAppContext.setAttribute(  
                 WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE,  

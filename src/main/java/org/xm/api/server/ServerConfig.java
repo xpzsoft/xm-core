@@ -18,25 +18,52 @@ import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author xpzsoft
+ * @Description Web App Server类
+ * @version 1.2.0
+ */
 public class ServerConfig{
 	private static final Logger log = LoggerFactory.getLogger(ServerConfig.class);
 	
+	//config.xml配置文件路径
 	private static final String path = "config/config.xml";
 	
+	//Web App名称
 	private String server_name = "/";
+	//Web App host地址
 	private String server_host = "127.0.0.1";
+	//Web App web.xml配置文件路径
 	private String server_config = "config/web/web.xml";
+	//Web App 根目录
 	private String server_root = "webapp";
+	//Web App 虚拟主机地址
 	private List<String> server_virtualhost  = new ArrayList<String>();
+	//Web App http协议访问端口
 	private int http_port = 8888;
+	//Web App http协议访问最长延时
 	private int http_timeout = 30000;
+	//Web App https协议访问端口
 	private int https_port = 9999;
+	//Web App https协议访问延时
 	private int https_timeout= 30000;
+	//Web App https协议密码
 	private String https_pw1 = "123456";
+	//Web App https协议密码
 	private String https_pw2 = "123456";
+	//Web App http协议是否启用
 	private boolean http_enable = true;
+	//Web App https协议是否启用
 	private boolean https_enable = true;
 	
+	/**
+     * @author xpzsoft
+     * @Description 加载配置文件
+     * @param 
+     * @return 是否加载成功
+     * @throws 读取文件失败异常
+     */
 	public boolean loadConfig() throws Exception{
 		File file = new File(path);
 		if(!file.exists())
@@ -55,6 +82,13 @@ public class ServerConfig{
 		return true;
 	}
 	
+	/**
+     * @author xpzsoft
+     * @Description 解析配置文件
+     * @param {root:[XML文档根节点]}
+     * @return 
+     * @throws
+     */
 	@SuppressWarnings("unchecked")
 	private void parseData(Element root) throws Exception{
 		for(Element item : (List<Element>)root.elements()){

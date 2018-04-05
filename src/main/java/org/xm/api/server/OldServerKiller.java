@@ -14,10 +14,21 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author xpzsoft
+ * @version 1.2.0
+ */
 public class OldServerKiller {
 	private static final Logger log = LoggerFactory.getLogger(OldServerKiller.class);
+	//检索到的端口号
 	private static Set<Integer> ports = new HashSet<Integer>();
     
+	/**
+     * @author xpzsoft
+     * @Description 清理被占用端口
+     * @param {args:[端口列表]}
+     */
 	public static void init(Integer...args){
 		for(int port : args){
 			start(port);

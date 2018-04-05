@@ -9,13 +9,27 @@ import javax.ws.rs.core.FeatureContext;
 import javax.ws.rs.ext.Provider;
 
 import org.springframework.http.MediaType;
-import org.xm.api.auth.AuthAnnotation;
+import org.xm.api.core.auth.AuthAnnotation;
 
+/**
+ * 
+ * @author xpzsoft
+ * @version 1.2.0
+ */
 @Provider
 public class VerificationFeature implements DynamicFeature{
+	//{key:RESTful api, value:权限}哈希表
 	private static HashMap<String, Integer> auth = new HashMap<String, Integer>();
+	//{key:RESTful api, value:请求参数是否为APPLICATION_JSON_VALUE格式}哈希表
 	private static HashMap<String, Boolean> req_file = new HashMap<String, Boolean>();
 	
+	/**
+     * @author xpzsoft
+     * @Description 读取注解，完成配置初始化
+     * @param {resourceInfo:[资源信息], context:[上下文信息]}
+     * @return
+     * @throws
+     */
 	public void configure(ResourceInfo resourceInfo, FeatureContext context) {
          
 		AuthAnnotation methodAuthzSpec = resourceInfo.getResourceMethod().getAnnotation(AuthAnnotation.class);
@@ -42,12 +56,27 @@ public class VerificationFeature implements DynamicFeature{
         }
     }
 	
+	/**
+     * @author xpzsoft
+     * @Description 验证api权限
+     * @param {path:[api路径], authcode:[权限值]}
+     * @return 是否满足权限要求
+     * @throws
+     */
 	public static boolean doVerificationPermissions(String path, int authcode){
 		if(auth.get(path) !=null && Integer.valueOf(auth.get(path).toString()) <= authcode){
 			return true;
 		}
 		return false;
 	}
+	
+	/**
+     * @author xpzsoft
+     * @Description 验证请求参数是否为json格式
+     * @param {path:[api路径]}
+     * @return 是否json格式
+     * @throws
+     */
 	public static boolean doVerificationNoApplicationJson(String path){
 		return req_file.get(path);
 	}
