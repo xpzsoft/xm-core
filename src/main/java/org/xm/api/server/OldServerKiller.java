@@ -14,10 +14,21 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author xpzsoft
+ * @version 1.2.0
+ */
 public class OldServerKiller {
 	private static final Logger log = LoggerFactory.getLogger(OldServerKiller.class);
+	//检索到的端口号
 	private static Set<Integer> ports = new HashSet<Integer>();
     
+	/**
+	 * 清理被占用端口
+     * @author xpzsoft
+     * @param args 端口列表
+     */
 	public static void init(Integer...args){
 		for(int port : args){
 			start(port);
@@ -49,7 +60,7 @@ public class OldServerKiller {
     /**
      * 验证此行是否为指定的端口，因为 findstr命令会是把包含的找出来，例如查找80端口，但是会把8099查找出来
      * @param str
-     * @return
+     * @return booelan
      */
     private static boolean validPort(String str){
         Pattern pattern = Pattern.compile("^ *[a-zA-Z]+ +\\S+");

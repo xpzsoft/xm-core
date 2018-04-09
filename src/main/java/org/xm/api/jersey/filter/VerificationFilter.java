@@ -16,20 +16,35 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.Response;
 
-import org.xm.api.auth.AuthToken;
-import org.xm.api.auth.AuthUser;
+import org.xm.api.core.auth.AuthToken;
+import org.xm.api.core.auth.AuthTokenUser;
 import org.xm.api.rt.ReturnAlert;
 import org.xm.api.rt.ReturnCode;
 import org.xm.api.rt.ReturnItem;
-import org.xm.api.springcontext.ConstSpringContext;
+import org.xm.api.springcontext.SpringContext;
 
+/**
+ * 
+ * @author xpzsoft
+ * @version 1.2.0
+ */
 @Priority(Priorities.AUTHENTICATION)
 public class VerificationFilter implements ContainerRequestFilter{
+	//HttpServletRequest 客户端请求对象
 	@Context  
     HttpServletRequest webRequest;
 	
+	/**
+	 * 请求过滤
+     * @author xpzsoft
+     * @param request 客户端请求对象
+     */
 	public void filter(ContainerRequestContext request) throws IOException {
 		// TODO Auto-generated method stub
+		
+		/*
+		 * 获取请求的RESTful api路径
+		 */
 		String path = request.getUriInfo().getPath();
 		if(path == null || path.length() == 0){
 			try {
@@ -40,14 +55,22 @@ public class VerificationFilter implements ContainerRequestFilter{
 			}
 		}
 		
+		/*
+		 * 查找token
+		 */
+		
+		//从header中查找token
 		String token = request.getHeaderString(AuthToken.getTOKEN_NAME());
 		
+		//从GET、POST请求的Parameter中查找token
 		if(token == null){
 			token = webRequest.getParameter(AuthToken.getTOKEN_NAME());
 		}
 		
+		//从form表单中查找token
 		if(token == null){
 			String contenttype = request.getHeaderString("Content-Type");
+			//只解析application/x-www-form-urlencoded类型的表单
 			if(contenttype !=null && contenttype.equals("application/x-www-form-urlencoded")){
 				InputStream is = request.getEntityStream();
 				BufferedReader reader = new BufferedReader(new InputStreamReader(is, "utf-8"));
@@ -77,7 +100,8 @@ public class VerificationFilter implements ContainerRequestFilter{
 		        request.setEntityStream(in_withcode);
 			}
 		}
- 
+		
+		//从cookie中查找token
 		if(token == null){
 			Cookie mt = request.getCookies().get(AuthToken.getTOKEN_NAME());
 			if(mt != null)
@@ -89,47 +113,50 @@ public class VerificationFilter implements ContainerRequestFilter{
 				request.abortWith(Response.status(401).build());
 			}
 			else{
-				ReturnItem ri = ConstSpringContext.getBean(ReturnItem.class);
+				ReturnItem ri = SpringContext.getContext().getBean("getReturnItem", ReturnItem.class);
 				ri.setInfo(ReturnCode.XM_FAILED_TOKEN_OVERDUE, "[token] 认证失败，请重新登录！", ReturnAlert.ALERT_ERROR, "[token] 认证失败，请重新登录！");
 				request.abortWith(Response.ok().entity(ri).build());
 			}
 			return;
 		}
 		else{
-			AuthUser auth_user = AuthToken.unsign(AuthToken.decodeXOR(token), AuthUser.class);
+			AuthTokenUser auth_user = AuthToken.unsign(AuthToken.decodeXOR(token), AuthTokenUser.class);
 			if(auth_user == null){
 				if(VerificationFeature.doVerificationNoApplicationJson(path)){
 					request.abortWith(Response.status(401).build());
 				}
 				else{
-					ReturnItem ri = ConstSpringContext.getBean(ReturnItem.class);
+					ReturnItem ri = SpringContext.getContext().getBean("getReturnItem", ReturnItem.class);
 					ri.setInfo(ReturnCode.XM_FAILED_TOKEN_OVERDUE, "[token] 认证失败！", ReturnAlert.ALERT_ERROR, "[token] 认证失败！");
 					request.abortWith(Response.ok().entity(ri).build());
 				}
 				return;
 			}
 			else{
-				webRequest.setAttribute("xm-token-id", auth_user.getTokenid());
-				webRequest.setAttribute("xm-user-id", auth_user.getUser_id());
+				webRequest.setAttribute("xm-token-id", auth_user.getTokenId());
+				webRequest.setAttribute("xm-user-id", auth_user.getUserId());
 			}
+			
+			//验证用户权限
 			if(!VerificationFeature.doVerificationPermissions(path, auth_user.getAuthority())){
 				if(VerificationFeature.doVerificationNoApplicationJson(path)){
 					request.abortWith(Response.status(401).build());
 				}
 				else{
-					ReturnItem ri = ConstSpringContext.getBean(ReturnItem.class);
+					ReturnItem ri = SpringContext.getContext().getBean("getReturnItem", ReturnItem.class);
 					ri.setInfo(ReturnCode.XM_FAILED_AUTHORITY, "[" + path + "]没有访问权限！", ReturnAlert.ALERT_WARNING, "[" + path + "]没有访问权限！");
 					request.abortWith(Response.ok().entity(ri).build());
 				}
 				return;
 			}
 			
+			//检查是否单点登录
 			if(!AuthToken.checkUser(auth_user)){
 				if(VerificationFeature.doVerificationNoApplicationJson(path)){
 					request.abortWith(Response.status(401).build());
 				}
 				else{
-					ReturnItem ri = ConstSpringContext.getBean(ReturnItem.class);
+					ReturnItem ri = SpringContext.getContext().getBean("getReturnItem", ReturnItem.class);
 					ri.setInfo(ReturnCode.XM_FAILED_AUTHORITY, "账号已经登录！", ReturnAlert.ALERT_WARNING, "账号已经登录！");
 					request.abortWith(Response.ok().entity(ri).build());
 				}

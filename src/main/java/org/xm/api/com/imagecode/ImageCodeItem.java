@@ -1,7 +1,14 @@
 package org.xm.api.com.imagecode;
 
+/**
+ * 
+ * @author xpzsoft
+ * @version 1.2.0
+ */
 public class ImageCodeItem {
+	//验证码的值
 	private String code = null;
+	//base64格式的验证码图片
 	private String imgBase64 = null;
 	
 	public ImageCodeItem(String code, String imgBase64){

@@ -1,9 +1,0 @@
-org.xm.api.auth
-org.xm.api.com.imagecode
-org.xm.api.core
-org.xm.api.core.asy
-org.xm.api.jersey.config
-org.xm.api.jersey.filter
-org.xm.api.rt
-org.xm.api.server
-org.xm.api.springcontext

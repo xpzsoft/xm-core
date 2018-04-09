@@ -11,6 +11,11 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+/**
+ * 
+ * @author xpzsoft
+ * @version 1.2.0
+ */
 public class ImageCode {
 	// 图片的宽度。
     private int width = 100;
@@ -21,31 +26,68 @@ public class ImageCode {
     // 验证码干扰线数
     private int lineCount = 20;
     
-
-    
+    //随机对象
     private Random random = new Random();
     
+    /**
+     * 默认构造函数，生成ImageCode默认实例
+     * @author xpzsoft
+     */
     public ImageCode(){}
     
+    /**
+     * 默认构造函数，生成ImageCode实例
+     * @author xpzsoft
+     * @param width 图片的宽度
+     * @param height 图片的高度
+     */
     public ImageCode(int width, int height) {
         this.width = width;
         this.height = height;
     }
-
+    
+    /**
+     * 构造函数，生成ImageCode实例
+     * @author xpzsoft
+     * @param width 图片的宽度 
+     * @param height 图片的高度
+     * @param codeCount 验证码个数
+     */
     public ImageCode(int width, int height, int codeCount) {
         this.width = width;
         this.height = height;
         this.codeCount = codeCount;
     }
-
+    
+    /**
+     * 构造函数，生成ImageCode实例
+     * @author xpzsoft
+     * @param width 图片的宽度 
+     * @param height 图片的高度
+     * @param codeCount 验证码个数
+     * @param lineCount 混淆线条数
+     */
     public ImageCode(int width, int height, int codeCount, int lineCount) {
         this.width = width;
         this.height = height;
         this.codeCount = codeCount;
         this.lineCount = lineCount;
     }
+    
+    /**
+     * 获取ImageCodeItem实例
+     * @author xpzsoft
+     * @return ImageCodeItem
+     */
+    public ImageCodeItem getBuffImg() {
+        return creatImage();
+    }
 
-    // 生成图片
+    /**
+     * 创建ImageCodeItem实例
+     * @author xpzsoft
+     * @return ImageCodeItem
+     */
     private ImageCodeItem creatImage() {
         int fontWidth = width / codeCount;// 字体的宽度
         int fontHeight = height - 5;// 字体的高度
@@ -106,10 +148,16 @@ public class ImageCode {
 		}
         byte[] bytes = baos.toByteArray();
         
+        //将图片转换成base64格式，并与验证码值一起存入ImageCodeItem对象
         return new ImageCodeItem(code.toLowerCase(), "data:image/png;base64," + Base64.getEncoder().encodeToString(bytes).trim());
     }
 
-    // 得到随机字符
+    /**
+     * 生成随机字符串
+     * @author xpzsoft
+     * @param n 字符串长度
+     * @return String
+     */
     private String randomStr(int n) {
         String str1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
         String str2 = "";
@@ -122,7 +170,13 @@ public class ImageCode {
         return str2;
     }
 
-    // 得到随机颜色
+    /**
+     * 随机生成颜色
+     * @author xpzsoft
+     * @param fc 最小值
+     * @param bc 最大值
+     * @return Color
+     */
     private Color getRandColor(int fc, int bc) {// 给定范围获得随机颜色
         if (fc > 255)
             fc = 255;
@@ -135,7 +189,10 @@ public class ImageCode {
     }
     
     /**
-     * 产生随机字体
+     * 随机生成生成字体
+     * @author xpzsoft
+     * @param  size 字体大小
+     * @return Font
      */
     @SuppressWarnings("unused")
 	private Font getFont(int size) {
@@ -147,59 +204,5 @@ public class ImageCode {
         font[3] = new Font("Wide Latin", Font.PLAIN, size);
         font[4] = new Font("Gill Sans Ultra Bold", Font.PLAIN, size);
         return font[random.nextInt(5)];
-    }
-
-
-    @SuppressWarnings("unused")
-	private void shearX(Graphics g, int w1, int h1, Color color) {
-
-        int period = random.nextInt(2);
-
-        boolean borderGap = true;
-        int frames = 1;
-        int phase = random.nextInt(2);
-
-        for (int i = 0; i < h1; i++) {
-            double d = (double) (period >> 1)
-                    * Math.sin((double) i / (double) period
-                            + (6.2831853071795862D * (double) phase)
-                            / (double) frames);
-            g.copyArea(0, i, w1, 1, (int) d, 0);
-            if (borderGap) {
-                g.setColor(color);
-                g.drawLine((int) d, i, 0, i);
-                g.drawLine((int) d + w1, i, w1, i);
-            }
-        }
-
-    }
-
-    @SuppressWarnings("unused")
-	private void shearY(Graphics g, int w1, int h1, Color color) {
-
-        int period = random.nextInt(40) + 10; // 50;
-
-        boolean borderGap = true;
-        int frames = 20;
-        int phase = 7;
-        for (int i = 0; i < w1; i++) {
-            double d = (double) (period >> 1)
-                    * Math.sin((double) i / (double) period
-                            + (6.2831853071795862D * (double) phase)
-                            / (double) frames);
-            g.copyArea(i, 0, 1, h1, 0, (int) d);
-            if (borderGap) {
-                g.setColor(color);
-                g.drawLine(i, (int) d, i, 0);
-                g.drawLine(i, (int) d + h1, i, h1);
-            }
-
-        }
-
-    }
-
-
-    public ImageCodeItem getBuffImg() {
-        return creatImage();
     }
 }
