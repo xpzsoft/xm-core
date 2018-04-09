@@ -2,13 +2,53 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>xm.org</groupId>
+  <groupId>com.xmlayout</groupId>
   <artifactId>XM-Core</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.1.0</version>
   <packaging>jar</packaging>
 
   <name>XM-Core</name>
   <url>http://maven.apache.org</url>
+  
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
+  
+   
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  
+  <scm>
+    <url>https://github.com/xpzsoft/xm-core</url>
+    <connection>git@github.com:xpzsoft/xm-core.git</connection>
+    <developerConnection>http://www.xmlayout.com</developerConnection>
+  </scm>
+  
+  <developers>
+    <developer>
+      <name>xpz</name>
+      <email>xmlayout@aliyun.com</email>
+      <url>http://www.xmlayout.com</url>
+    </developer>
+  </developers>
+  
+  <distributionManagement>
+	  <snapshotRepository>
+	    <id>ossrh</id>
+	    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+	  </snapshotRepository>
+	  <repository>
+	    <id>ossrh</id>
+	    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+	  </repository>
+	</distributionManagement>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

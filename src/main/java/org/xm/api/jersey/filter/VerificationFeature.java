@@ -1,6 +1,7 @@
 package org.xm.api.jersey.filter;
 
 import java.util.HashMap;
+
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.container.DynamicFeature;
